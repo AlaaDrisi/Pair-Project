@@ -1,0 +1,61 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat+Alternates:ital,wght@1,300&family=Montserrat:ital,wght@0,500;1,400&family=Nunito:wght@500&display=swap%27');
+* {
+    color: white;
+    font-family: Montserrat;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-image: url("/imgs/background.jpg");
+    background-repeat: no-repeat;
+    background-size: 1880px 100vh
+}
+
+h1 {
+    position: relative;
+    left: 50px;
+    top: 30px;
+    background-color: #9F603F;
+    width: 150px;
+    height: 50px;
+    border-radius: 10px;
+    font-size: 24px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-style: solid;
+    cursor: pointer;
+}
+
+a {
+    text-decoration: none;
+}
+
+#container {
+    background-color: rgb(255, 255, 255);
+    border-radius: 25px;
+    position: absolute;
+    left: 400px;
+    top: 130px;
+    border-style: solid;
+    border-color: #9F603F;
+    width: 700px;
+    height: 500px;
+    padding: 20px;
+    display: grid;
+    grid-template-columns: 1px repeat(13, 1fr);
+    grid-template-rows: repeat(10, 1fr);
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+}
+
+.cell {
+    width: 50px;
+    height:50px;
+    border-style: solid;
+    border-color: rgb(0, 0, 0);
+    margin: 0;
+}
