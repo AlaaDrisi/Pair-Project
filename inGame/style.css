@@ -34,6 +34,42 @@ a {
     text-decoration: none;
 }
 
+#score {
+    position: absolute;
+    top: 350px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+#player1Score {
+    background-color: #9F603F;
+    width: 150px;
+    height: 50px;
+    margin-left: 150px;
+    border-radius: 10px;
+    font-size: 24px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-style: solid;
+}
+
+#player2Score {
+    background-color: white;
+    color: #9F603F;
+    width: 150px;
+    height: 50px;
+    margin-right:150px;
+    border-radius: 10px;
+    font-size: 24px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-style: solid;
+}
+
 #container {
     background-color: rgb(255, 255, 255);
     border-radius: 25px;
