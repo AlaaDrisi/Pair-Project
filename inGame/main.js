@@ -15,8 +15,26 @@ function  Game(){
         for(var i=0;i<13;i++){
             var position=`${i}-${j}`
                 $("#container").append(`<div id="${k}" class='cell'><span id="${i}-${j}-left" class='line-vertical left'></span><span id="${i}-${j}-top" class='line-horizon top'></span><span id="${i}-${j}-right" class='line-vertical right'></span><span id="${i}-${j}-bottom" class='line-horizon bottom'></span></div>`)
-                k++
                 all.status.push({[`${position}-left`]:false,[`${position}-top`]:false,[`${position}-right`]:false,[`${position}-bottom`]:false})
+                console.log(k);
+                if((k+1)%13===0){
+                    $(`#${i}-${j}-right`).css({"background-color": "black", "cursor" : "default"})
+                    all.status[k][`${i}-${j}-right`] = true
+                }
+                if(k < 13){
+                    $(`#${i}-${j}-top`).css({"background-color": "black", "cursor" : "default"})
+                    all.status[k][`${i}-${j}-top`] = true
+                }
+                if(k > 103){
+                    $(`#${i}-${j}-bottom`).css({"background-color": "black", "cursor" : "default"})
+                    all.status[k][`${i}-${j}-bottom`] = true
+                }
+                if(i === 0){
+                    $(`#${i}-${j}-left`).css({"background-color": "black", "cursor" : "default"})
+                    $(`#${i}-${j}-left`).off()
+                    all.status[k][`${i}-${j}-left`] = true
+                }
+                k++
             }
         }
         // console.log(all.status);
@@ -56,10 +74,8 @@ function  Game(){
             // console.log(all.status[currentCellId]);
             // console.log(all.status[rightCellId]);
             // console.log(all.status)
-            console.log(all.status[currentCellId]);
-            if(!(Object.values(all.status[currentCellId]).includes(false))){
-                $(`#${currentCellId}`).css({"background-color": "blue"})
-            }
+            console.log(all.status);
+            check(all.status)
         })
     }
     function Player(name){
@@ -69,6 +85,15 @@ function  Game(){
         result.incrementScore=incrementScore
         return result
     }
+
+    function check(coll){
+        coll.forEach((e, i) => {
+            if(!(Object.values(e).includes(false))){
+                $(`#${i}`).css({"background-color": "blue"})
+            }
+        });
+    }
+
     var incrementScore=function(){
         this.score+=1
     }
