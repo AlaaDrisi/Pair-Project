@@ -1,22 +1,28 @@
 
 var players=JSON.parse(localStorage.getItem("players"));
+var colors=JSON.parse(localStorage.getItem("colors"))
+
+$('#player1Score').css({"background-color" : colors.player1color})
+$('#player2Score').css({"background-color" : colors.player2color})
+$('#player1Score').text(`${players.player1Name}: 0`)
+$('#player2Score').text(`${players.player2Name}: 0`)
 
 function  Game(){
     var all={}
     all.status=[]
     all.generateBoard=fillBoard()
-    all.player1=Player(players.player1Name)
-    all.player2=Player(players.player2Name)
+    all.player1=Player(players.player1Name, colors.player1color)
+    all.player2=Player(players.player2Name, colors.player2color)
     all.currentPlayer=all.player1
 
     function fillBoard(){
         var k=0
+        var turn=0
         for(var j=0;j<9;j++){
         for(var i=0;i<13;i++){
             var position=`${i}-${j}`
                 $("#container").append(`<div id="${k}" class='cell'><span id="${i}-${j}-left" class='line-vertical left'></span><span id="${i}-${j}-top" class='line-horizon top'></span><span id="${i}-${j}-right" class='line-vertical right'></span><span id="${i}-${j}-bottom" class='line-horizon bottom'></span></div>`)
                 all.status.push({[`${position}-left`]:false,[`${position}-top`]:false,[`${position}-right`]:false,[`${position}-bottom`]:false})
-                console.log(k);
                 if((k+1)%13===0){
                     $(`#${i}-${j}-right`).css({"background-color": "black", "cursor" : "default"})
                     all.status[k][`${i}-${j}-right`] = true
@@ -39,11 +45,17 @@ function  Game(){
         }
         // console.log(all.status);
         $("span").on("click",function(e){
+            turn++
             var currentSpan=e.target.id;
             var currentParent = $(`#${currentSpan}`).parent();
             var currentCellId = Object.values(currentParent)[0].id
             var currentSpanClass=$(`#${currentSpan}`).attr("class").split(" ")[0]
             // console.log(currentSpanClass);
+            if(turn%2===0){
+                all.currentPlayer=all.player1
+            } else {
+                all.currentPlayer=all.player2
+            }
             if(currentSpanClass === "line-horizon"){
                 // console.log("horzontal");
                 var upperSpan=currentSpan.split("-")
@@ -78,20 +90,32 @@ function  Game(){
             check(all.status)
         })
     }
-    function Player(name){
+    function Player(name, color){
         var result={}
         result.name=name
         result.score=0
         result.incrementScore=incrementScore
+        result.playerColor=color
         return result
     }
 
-    function check(coll){
+    function check(coll, current){
         coll.forEach((e, i) => {
-            if(!(Object.values(e).includes(false))){
-                $(`#${i}`).css({"background-color": "blue"})
+            if(all.currentPlayer === all.player1){
+                if(!(Object.values(e).includes(false))){
+                    $(`#${i}`).css({"background-color": all.player1.playerColor})
+                    all.status.splice(i,1)
+                }
+            } else {
+                if(!(Object.values(e).includes(false))){
+                    $(`#${i}`).css({"background-color": all.player2.playerColor})
+                    all.status.splice(i,1)
+                }
             }
         });
+        if(all.status.length===0){
+            console.log("we have a winner");
+        }
     }
 
     var incrementScore=function(){
