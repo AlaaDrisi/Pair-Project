@@ -59,54 +59,90 @@ function  Game(){
         $("span").on("click",function(e){
             if(forbidden.includes(`${e.target.id}`)) {
                 $(`#${e.target.id}`).off()
-                return
             }
             var currentSpan=e.target.id;
-            var currentParent = $(`#${currentSpan}`).parent();
-            var currentCellId = Object.values(currentParent)[0].id
             var currentSpanClass=$(`#${currentSpan}`).attr("class").split(" ")[0]
             if(currentSpanClass === "line-horizon"){
                 var upperSpan=currentSpan.split("-")
                 upperSpan[1]-=1
                 upperSpan[2]="bottom"
                 upperSpan=upperSpan.join("-")
-                var upperParent = $(`#${upperSpan}`).parent();
-                var upperCellId = Object.values(upperParent)[0].id
                 $(`#${currentSpan}`).css({"background-color": "rgba(255, 0, 0, 1)", "cursor" : "default"})
                 $(`#${currentSpan}`).off()
-                all.status[currentCellId][currentSpan]=true
-                all.status[upperCellId][upperSpan]=true
+                for(object of all.status){
+                    for(key in object){
+                        if(Object.keys(object).includes(currentSpan) ){
+                            object[currentSpan]=true
+                            break;
+                        }
+                        if(Object.keys(object).includes(upperSpan)){
+                            object[upperSpan]=true
+                            break;
+                        }
+                    }
+                }
             }
             else if(currentSpanClass === "line-vertical"){
                 var rightSpan=currentSpan.split("-")
-            rightSpan[0]-=1
-            rightSpan[2]="right"
-            rightSpan=rightSpan.join("-")
-            var rightParent = $(`#${rightSpan}`).parent();
-            var rightCellId = Object.values(rightParent)[0].id
-            $(`#${currentSpan}`).css({"background-color": "rgba(255, 0, 0, 1)", "cursor" : "default"})
-            $(`#${currentSpan}`).off()
-            all.status[currentCellId][currentSpan]=true
-            all.status[rightCellId][rightSpan]=true
+                    rightSpan[0]-=1
+                    rightSpan[2]="right"
+                    rightSpan=rightSpan.join("-")
+                    console.log(rightSpan);
+                $(`#${currentSpan}`).css({"background-color": "rgba(255, 0, 0, 1)", "cursor" : "default"})
+                $(`#${currentSpan}`).off()
+                for(object of all.status){
+                    for(key in object){
+                        if(Object.keys(object).includes(currentSpan) ){
+                            object[currentSpan]=true
+                            break;
+                        }
+                        if(Object.keys(object).includes(rightSpan)){
+                            object[rightSpan]=true
+                            break;
+                        }
+                    }
+                }
         }
-        console.log(all.status[currentCellId])
-        if(check(all.status[currentCellId]) && all.currentPlayer === all.player1) {
-            $(`#${currentCellId}`).css({"background-color": all.player1.playerColor})
-            all.currentPlayer.incrementScore()
-            all.currentPlayer.score
-            $('#player1Score').text(`${players.player1Name}: ${all.currentPlayer.score}`)
+        // console.log(all.status)
+        var direction=currentSpan.split("-")[2]
+        if(direction==="top"){
+            var currentCellId1=Object.values($(`#${currentSpan}`).parent())[0].id
+            var currentCellId2=Object.values($(`#${upperSpan}`).parent())[0].id
+        }else if(direction==="left"){
+            var currentCellId1=Object.values($(`#${currentSpan}`).parent())[0].id
+            var currentCellId2=Object.values($(`#${rightSpan}`).parent())[0].id
         }
-        else if(check(all.status[currentCellId]) && all.currentPlayer === all.player2) {
-            $(`#${currentCellId}`).css({"background-color": all.player2.playerColor})
-            all.currentPlayer.incrementScore()
-            all.currentPlayer.score
-            $('#player2Score').text(`${players.player2Name}: ${all.currentPlayer.score}`)
+        // console.log(currentCellId1,currentCellId2); //2 cases if the cell we mean is the one next to the one with the shared span
+        if( all.currentPlayer === all.player1) {
+            if(check(all.status[currentCellId1])){
+                $(`#${currentCellId1}`).css({"background-color": all.player1.playerColor})
+                all.currentPlayer.incrementScore()
+                $('#player1Score').text(`${players.player1Name}: ${all.currentPlayer.score}`)
+            }
+            else if(check(all.status[currentCellId2])){
+                $(`#${currentCellId2}`).css({"background-color": all.player1.playerColor})
+                all.currentPlayer.incrementScore()
+                $('#player1Score').text(`${players.player1Name}: ${all.currentPlayer.score}`)
+            }
+        }
+        else if(all.currentPlayer === all.player2) {
+            if(check(all.status[currentCellId1])){
+                $(`#${currentCellId1}`).css({"background-color": all.player2.playerColor})
+                all.currentPlayer.incrementScore()
+                $('#player2Score').text(`${players.player2Name}: ${all.currentPlayer.score}`)
+            }
+            else if(check(all.status[currentCellId2])){
+                $(`#${currentCellId2}`).css({"background-color": all.player2.playerColor})
+                all.currentPlayer.incrementScore()
+                $('#player2Score').text(`${players.player2Name}: ${all.currentPlayer.score}`)
+            }
         }
         if(all.currentPlayer === all.player1){
             all.currentPlayer = all.player2
         } else {
             all.currentPlayer = all.player1
         }
+        // console.log(all.status);
     })
     }
     function Player(name, color){
