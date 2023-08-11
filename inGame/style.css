@@ -44,22 +44,27 @@ a {
 #player1Score {
     background-color: #9F603F;
     width: 150px;
-    height: 50px;
+    height: auto;
     margin-left: 150px;
     border-radius: 10px;
     font-size: 24px;
     font-weight: bold;
     display: flex;
+    text-align: center;
     align-items: center;
     justify-content: center;
     border-style: solid;
+    overflow: auto;
+    overflow-wrap: break-word;  
+    word-wrap: break-word; 
+    word-break: break-word;
 }
 
 #player2Score {
     background-color: white;
     color: #9F603F;
     width: 150px;
-    height: 50px;
+    height: auto;
     margin-right:150px;
     border-radius: 10px;
     font-size: 24px;
@@ -68,8 +73,13 @@ a {
     align-items: center;
     justify-content: center;
     border-style: solid;
+    border-color: white;
+    color: white;
+    overflow: auto;
+    overflow-wrap: break-word;  
+    word-wrap: break-word; 
+    word-break: break-word;
 }
-
 #container {
     background-color: rgb(255, 255, 255);
     border-radius: 25px;
@@ -87,47 +97,94 @@ a {
     grid-gap: 0 0;
 }
 
+#finalScreen {
+    background-color: rgb(255, 255, 255);
+    border-radius: 25px;
+    position: absolute;
+    left: 400px;
+    top: 130px;
+    border-style: solid;
+    border-color: #9F603F;
+    width: 700px;
+    height: 500px;
+    padding: 20px;
+    z-index: -1;
+    color:#9F603F; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 64px;
+    font-weight: bold;
+    text-align: center;
+}
+
 .cell {
     width: 52px;
     height:52px;
-    /* border-style: solid; */
     border-color: rgba(0, 0, 0, 0.304);
     margin: 0;
     padding: 0;
     position: relative;
     border: none;
 }
-.line-vertical{
+
+.line-vertical {
     position: absolute;
     width: 3px;
     height: 51px;
-    background-color: rgba(255, 0, 0, 0.1);
+    background-color: rgba(0, 0, 0, 0.1);
     border: none;
     cursor: pointer;
 }
-.line-vertical:hover{
-    background-color: rgba(255, 0, 0, 0.5);
+
+.line-vertical:hover {
+    background-color: rgba(0, 0, 0, 1);
 }
-.line-horizon{
+
+.line-horizon {
     position: absolute;
     width: 51px;
     height: 3px;
-    background-color: rgba(255, 0, 0, 0.1);
+    background-color: rgba(0, 0, 0, 0.1);
     border: none;
     cursor: pointer;
 }
-.line-horizon:hover{
-    background-color: rgba(255, 0, 0, 0.5);
+
+.line-horizon:hover {
+    background-color: rgba(0, 0, 0, 1);
+    
 }
-.left{
+
+.left {
     left: 0;
 }
-.right{
+
+.right {
     right: 0;
 }
-.top{
+
+.top {
     top: 0;
 }
-.bottom{
+
+.bottom {
     bottom: 0;
+}
+
+#restartBtn {
+    position: relative;
+    top: 150px;
+    background-color: #9F603F;
+    width: 150px;
+    height: 50px;
+    border-radius: 10px;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+#restartBtn:hover {
+    background-color: #874C2A;
+    cursor: pointer;
+    transition: 0.5s;
 }

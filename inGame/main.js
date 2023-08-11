@@ -2,8 +2,8 @@
 var players=JSON.parse(localStorage.getItem("players"));
 var colors=JSON.parse(localStorage.getItem("colors"))
 
-$('#player1Score').css({"background-color" : colors.player1color})
-$('#player2Score').css({"background-color" : colors.player2color})
+$('#player1Score').css({"background-color" : colors.player1color,"opacity":1})
+$('#player2Score').css({"background-color" : colors.player2color,"opacity":0.4})
 if(players.player1Name) {
     $('#player1Score').text(`${players.player1Name}: 0`)
 } else {
@@ -20,6 +20,7 @@ if(players.player2Name) {
 function  Game(){
     var all={}
     all.status=[]
+    all.checkedBoxes=0
     all.generateBoard = fillBoard()
     all.player1 = Player(players.player1Name, colors.player1color)
     all.player2 = Player(players.player2Name, colors.player2color)
@@ -59,6 +60,7 @@ function  Game(){
         $("span").on("click",function(e){
             if(forbidden.includes(`${e.target.id}`)) {
                 $(`#${e.target.id}`).off()
+                return
             }
             var currentSpan=e.target.id;
             var currentSpanClass=$(`#${currentSpan}`).attr("class").split(" ")[0]
@@ -67,7 +69,7 @@ function  Game(){
                 upperSpan[1]-=1
                 upperSpan[2]="bottom"
                 upperSpan=upperSpan.join("-")
-                $(`#${currentSpan}`).css({"background-color": "rgba(255, 0, 0, 1)", "cursor" : "default"})
+                $(`#${currentSpan}`).css({"background-color": "rgba(0, 0, 0, 1)", "cursor" : "default"})
                 $(`#${currentSpan}`).off()
                 for(object of all.status){
                     for(key in object){
@@ -87,7 +89,7 @@ function  Game(){
                     rightSpan[0]-=1
                     rightSpan[2]="right"
                     rightSpan=rightSpan.join("-")
-                $(`#${currentSpan}`).css({"background-color": "rgba(255, 0, 0, 1)", "cursor" : "default"})
+                $(`#${currentSpan}`).css({"background-color": "rgba(0, 0, 0, 1)", "cursor" : "default"})
                 $(`#${currentSpan}`).off()
                 for(object of all.status){
                     for(key in object){
@@ -111,27 +113,39 @@ function  Game(){
             var currentCellId2=Object.values($(`#${rightSpan}`).parent())[0].id
         }
         if( all.currentPlayer === all.player1) {
+            $('#player2Score').fadeTo(500,1)
+            $('#player1Score').fadeTo(500,0.4)
             if(check(all.status[currentCellId1])){
                 $(`#${currentCellId1}`).css({"background-color": all.player1.playerColor})
                 all.currentPlayer.incrementScore()
                 $('#player1Score').text(`${players.player1Name}: ${all.currentPlayer.score}`)
+                all.checkedBoxes+=1
+                endContinue(all.checkedBoxes)
             }
-            else if(check(all.status[currentCellId2])){
+            if(check(all.status[currentCellId2])){
                 $(`#${currentCellId2}`).css({"background-color": all.player1.playerColor})
                 all.currentPlayer.incrementScore()
                 $('#player1Score').text(`${players.player1Name}: ${all.currentPlayer.score}`)
+                all.checkedBoxes+=1
+                endContinue(all.checkedBoxes)
             }
         }
         else if(all.currentPlayer === all.player2) {
+            $('#player1Score').fadeTo(500,1)
+            $('#player2Score').fadeTo(500,0.4)
             if(check(all.status[currentCellId1])){
                 $(`#${currentCellId1}`).css({"background-color": all.player2.playerColor})
                 all.currentPlayer.incrementScore()
                 $('#player2Score').text(`${players.player2Name}: ${all.currentPlayer.score}`)
+                all.checkedBoxes+=1
+                endContinue(all.checkedBoxes)
             }
-            else if(check(all.status[currentCellId2])){
+            if(check(all.status[currentCellId2])){
                 $(`#${currentCellId2}`).css({"background-color": all.player2.playerColor})
                 all.currentPlayer.incrementScore()
                 $('#player2Score').text(`${players.player2Name}: ${all.currentPlayer.score}`)
+                all.checkedBoxes+=1
+                endContinue(all.checkedBoxes)
             }
         }
         if(all.currentPlayer === all.player1){
@@ -158,6 +172,25 @@ function  Game(){
             return false
         }
         return true
+    }
+    function endContinue(nbBoxes){
+        var winner=""
+        if(all.player1.score>all.player2.score){
+            winner=all.player1.name+" is the winner!!!"
+        }
+        else if(all.player1.score<all.player2.score){
+            winner=all.player2.name+" is the winner!!!"
+        } else {
+            winner="DRAW!"
+        }
+        if(nbBoxes===117){
+            $("#container").fadeOut(500)
+                $("#finalScreen").text(winner)
+                $("#finalScreen").append("<button id='restartBtn'>RESTART</button>")
+                $("#restartBtn").on("click",function(){
+                    window.location.reload()
+                })
+        }
     }
     return all
 }
