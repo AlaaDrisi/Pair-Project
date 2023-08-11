@@ -118,7 +118,6 @@ function  Game(){
         result.score=0
         result.incrementScore=incrementScore
         result.playerColor=color
-
         return result
     }
 
@@ -128,42 +127,7 @@ function  Game(){
         }
         return true
     }
-
-
-    
     return all
 }
 
-var game1=Game()
-$("#startBtn").on("click",game1)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// var board=[
-//     ["","",[true,true,true,false],"",""],
-//     ["",[true,true,false,false],[false,false,false,false],[false,true,true,false],""],
-//     [[true,true,false,true],[false,false,false,false],[false,false,false,false],[false,false,false,false],[false,true,true,true]],
-//     ["",[true,false,false,true],[false,false,false,false],[false,false,true,true],""],
-//     ["","",[true,false,true,true],"",""],
-// ]
+$("#startBtn").on("click", Game())
