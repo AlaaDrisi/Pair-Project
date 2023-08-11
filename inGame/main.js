@@ -87,7 +87,6 @@ function  Game(){
                     rightSpan[0]-=1
                     rightSpan[2]="right"
                     rightSpan=rightSpan.join("-")
-                    console.log(rightSpan);
                 $(`#${currentSpan}`).css({"background-color": "rgba(255, 0, 0, 1)", "cursor" : "default"})
                 $(`#${currentSpan}`).off()
                 for(object of all.status){
@@ -103,7 +102,6 @@ function  Game(){
                     }
                 }
         }
-        // console.log(all.status)
         var direction=currentSpan.split("-")[2]
         if(direction==="top"){
             var currentCellId1=Object.values($(`#${currentSpan}`).parent())[0].id
@@ -112,7 +110,6 @@ function  Game(){
             var currentCellId1=Object.values($(`#${currentSpan}`).parent())[0].id
             var currentCellId2=Object.values($(`#${rightSpan}`).parent())[0].id
         }
-        // console.log(currentCellId1,currentCellId2); //2 cases if the cell we mean is the one next to the one with the shared span
         if( all.currentPlayer === all.player1) {
             if(check(all.status[currentCellId1])){
                 $(`#${currentCellId1}`).css({"background-color": all.player1.playerColor})
@@ -142,7 +139,6 @@ function  Game(){
         } else {
             all.currentPlayer = all.player1
         }
-        // console.log(all.status);
     })
     }
     function Player(name, color){
