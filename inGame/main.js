@@ -119,7 +119,7 @@ function  Game(){
                 all.currentPlayer.incrementScore()
                 $('#player1Score').text(`${players.player1Name}: ${all.currentPlayer.score}`)
             }
-            else if(check(all.status[currentCellId2])){
+            if(check(all.status[currentCellId2])){
                 $(`#${currentCellId2}`).css({"background-color": all.player1.playerColor})
                 all.currentPlayer.incrementScore()
                 $('#player1Score').text(`${players.player1Name}: ${all.currentPlayer.score}`)
@@ -131,7 +131,7 @@ function  Game(){
                 all.currentPlayer.incrementScore()
                 $('#player2Score').text(`${players.player2Name}: ${all.currentPlayer.score}`)
             }
-            else if(check(all.status[currentCellId2])){
+            if(check(all.status[currentCellId2])){
                 $(`#${currentCellId2}`).css({"background-color": all.player2.playerColor})
                 all.currentPlayer.incrementScore()
                 $('#player2Score').text(`${players.player2Name}: ${all.currentPlayer.score}`)
